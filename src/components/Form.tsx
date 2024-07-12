@@ -1,17 +1,22 @@
-import { useState,ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { categories } from "../data/categories";
+import { Activity } from "../types";
 
 export default function Form() {
-  const [activity, setActivity] = useState({
+  const [activity, setActivity] = useState<Activity>({
     category: 1,
     name: "",
     calories: 0,
   });
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement> |ChangeEvent<HTMLInputElement>  ) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+  ) => {
+    const isNumberField = ["category", "calories"].includes(e.target.id);
+    console.log(isNumberField);
     setActivity({
-      ...activity, 
-      [e.target.id]: e.target.value,
+      ...activity,
+      [e.target.id]: isNumberField ? +e.target.value : e.target.value,
     });
   };
   return (
@@ -25,10 +30,10 @@ export default function Form() {
           className="border border-slate-300 p-2 rounded-lg w-full bg-white"
           id="category"
           value={activity.category}
-          onChange={ handleChange}
+          onChange={handleChange}
         >
           {categories.map((category) => (
-            <option key={category.id}> {category.name} </option>
+            <option key={category.id} value={category.id}> {category.name} </option>
           ))}
         </select>
       </div>
