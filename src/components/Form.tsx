@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { categories } from "../data/categories";
 import { Activity } from "../types";
 
@@ -20,12 +20,20 @@ export default function Form() {
     });
   };
 
-  const isValidActivity= ()=> {
-    const{name, calories}= activity
-    return name.trim() !=='' && calories > 0
-  } 
+  const isValidActivity = () => {
+    const { name, calories } = activity;
+    return name.trim() !== "" && calories > 0;
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('...Submit')
+  };
   return (
-    <form className="space-y-5 bg-white shadow p-10 rounded-lg">
+    <form
+      className="space-y-5 bg-white shadow p-10 rounded-lg"
+      onSubmit={handleSubmit}
+    >
       <div className=" grid grid-cols-1 gap-3">
         <label htmlFor="category" className="font-bold">
           {" "}
@@ -38,7 +46,10 @@ export default function Form() {
           onChange={handleChange}
         >
           {categories.map((category) => (
-            <option key={category.id} value={category.id}> {category.name} </option>
+            <option key={category.id} value={category.id}>
+              {" "}
+              {category.name}{" "}
+            </option>
           ))}
         </select>
       </div>
@@ -73,7 +84,7 @@ export default function Form() {
 
       <input
         type="submit"
-        value={activity.category === 1 ? 'Guardar Comida': 'Guardar Ejercicio'}
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"}
         className="bg-gray-500 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer disabled:opacity-30 "
         disabled={!isValidActivity()}
       />
