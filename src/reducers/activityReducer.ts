@@ -1,8 +1,8 @@
 import { Activity } from "../types";
 
-export type ActivityAcitions =
+export type ActivityActions =
   | { type: "save-activity"; payload: { newActivity: Activity } }
-  | { type: "set-activiteId"; payload: { id: Activity["id"] } };
+  | { type: "set-activeId"; payload: { id: Activity["id"] } };
 
 export type ActivityState = {
   activities: Activity[];
@@ -16,7 +16,7 @@ export const initialState: ActivityState = {
 
 export const activityReducer = (
   state: ActivityState = initialState,
-  action: ActivityAcitions
+  action: ActivityActions
 ) => {
   if (action.type === "save-activity") {
     console.log(action.payload.newActivity);
@@ -27,7 +27,7 @@ export const activityReducer = (
     };
   }
 
-  if (action.type === "set-activiteId") {
+  if (action.type === "set-activeId") {
     return {
       ...state,
       activeId: action.payload.id,
